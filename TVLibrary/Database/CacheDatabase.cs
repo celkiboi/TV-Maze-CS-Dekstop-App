@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TVLibrary;
+namespace TVLibrary.Database;
 
 public class CacheDatabase : IDatabase
 {
@@ -13,10 +13,10 @@ public class CacheDatabase : IDatabase
     readonly TimeSpan maximumTimeDifference;
 
     public CacheDatabase(IDatabase remoteDatabase)
-        :this(remoteDatabase, new TimeSpan(0,0,30))
+        : this(remoteDatabase, new TimeSpan(0, 0, 30))
     { }
 
-    public CacheDatabase(IDatabase remoteDatabase, TimeSpan maximumTimeDifference) 
+    public CacheDatabase(IDatabase remoteDatabase, TimeSpan maximumTimeDifference)
     {
         this.remoteDatabase = remoteDatabase;
         this.maximumTimeDifference = maximumTimeDifference;
@@ -24,9 +24,9 @@ public class CacheDatabase : IDatabase
 
     public async Task<string> FetchDataAsync(string url)
     {
-        if (localData.ContainsKey(url)) 
+        if (localData.ContainsKey(url))
         {
-            if (IsNewEnough(localData[url])) 
+            if (IsNewEnough(localData[url]))
             {
                 return localData[url].Item2;
             }
@@ -43,8 +43,8 @@ public class CacheDatabase : IDatabase
         localData.Add(url, (DateTime.Now, result));
     }
 
-    bool IsNewEnough((DateTime, string) data) 
+    bool IsNewEnough((DateTime, string) data)
     {
-        return (DateTime.Now - data.Item1) <= maximumTimeDifference;
+        return DateTime.Now - data.Item1 <= maximumTimeDifference;
     }
 }

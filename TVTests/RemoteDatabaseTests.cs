@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using TVLibrary;
+using TVLibrary.Database;
 using static System.Net.WebRequestMethods;
 
 namespace TVTests;
