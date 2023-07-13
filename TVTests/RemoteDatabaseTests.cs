@@ -18,7 +18,7 @@ internal class RemoteDatabaseTests
         RemoteDatabase remoteDatabase = new();
         const string url = "https://api.tvmaze.com/shows/1";
         string expected;
-        using StreamReader streamReader = new(@"TVShowFetchDataAsyncTestJSON.json");
+        using StreamReader streamReader = new(@"TestShowJSON.json");
         {
             expected = streamReader.ReadToEnd();
         }
