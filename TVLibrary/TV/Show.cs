@@ -22,4 +22,8 @@ public record class Show
     [property: JsonPropertyName("image")] Image Image
 )
 {
+    public static Show NullObject { get; } = new Show(0, "", "", 
+        new string[]{""}, "Didn't run", 
+        0, 0, DateOnly.MinValue, DateOnly.MaxValue, 
+        "", new Image("", ""));
 }
