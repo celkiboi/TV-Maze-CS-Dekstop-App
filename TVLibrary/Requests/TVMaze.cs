@@ -12,6 +12,8 @@ namespace TVLibrary.Requests;
 
 public class TVMaze : IRequestDispatcher
 {
+    static TVMaze? instance;
+
     readonly IDeserializer deserializer;
     readonly IDatabase database;
 
@@ -72,4 +74,9 @@ public class TVMaze : IRequestDispatcher
     static string MakeShowSearchByIdQuery(int id)
         => @"https://api.tvmaze.com/shows/" + id.ToString();
 
+    public static TVMaze Instance
+    {
+        get { return instance ??= new(); }
+        private set { instance = value; }
+    }
 }

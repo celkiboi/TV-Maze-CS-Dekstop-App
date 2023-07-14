@@ -12,7 +12,7 @@ public record class Show
     [property: JsonPropertyName("id")] int ID,
     [property: JsonPropertyName("url")] string URL,
     [property: JsonPropertyName("name")] string Name,
-    [property: JsonPropertyName("genre")] string[] Genres,
+    [property: JsonPropertyName("genres")] string[] Genres,
     [property: JsonPropertyName("status")] string Status,
     [property: JsonPropertyName("runtime")] int Runtime,
     [property: JsonPropertyName("averageRuntime")] int AverageRuntime,
