@@ -12,6 +12,17 @@ public class RemoteDatabase : IDatabase
 
     public async Task<string> FetchDataAsync(string url)
     {
-        return await client.GetStringAsync(url);
+        string result;
+
+        try
+        {
+            result = await client.GetStringAsync(url);
+        }
+        catch
+        {
+            return string.Empty;
+        }
+
+        return result;
     }
 }

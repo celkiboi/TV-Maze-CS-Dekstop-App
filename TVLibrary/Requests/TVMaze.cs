@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TVLibrary.Database;
 using TVLibrary.Serialization;
 using TVLibrary.TV;
+using TVLibrary.TV.Builders;
 
 namespace TVLibrary.Requests;
 
@@ -24,11 +25,7 @@ public class TVMaze : IRequestDispatcher
     {
         query = MakeShowSearchQuery(query);
 
-        string? response = database.FetchDataAsync(query).Result;
-        if (response is null) 
-        {
-            return Enumerable.Empty<Show>();
-        }
+        string response = database.FetchDataAsync(query).Result;
 
         IEnumerable<Show>? shows = deserializer.Deserialize<IEnumerable<Show>>(response);
         if (shows is null)
@@ -43,16 +40,26 @@ public class TVMaze : IRequestDispatcher
     {
         query = MakeSingleShowSearchQuery(query);
 
-        string? response = database.FetchDataAsync(query).Result;
-        if (response is null)
-        {
-            return Show.NullObject;
-        }
+        string response = database.FetchDataAsync(query).Result;
 
         Show? show = deserializer.Deserialize<Show>(response);
         if (show is null)
         {
-            return Show.NullObject;
+            return ShowDirector.Instance.NullShow;
+        }
+
+        return show;
+    }
+    public Show SearchShowById(int id)
+    {
+        string query = MakeShowSearchByIdQuery(id);
+
+        string response = database.FetchDataAsync(query).Result;
+
+        Show? show = deserializer.Deserialize<Show?>(response);
+        if (show is null)
+        {
+            return ShowDirector.Instance.NullShow;
         }
 
         return show;
@@ -62,5 +69,7 @@ public class TVMaze : IRequestDispatcher
         => @"https://api.tvmaze.com/search/shows?q=" + query;
     static string MakeSingleShowSearchQuery(string query) 
         => @"https://api.tvmaze.com/singlesearch/shows?q=" + query;
+    static string MakeShowSearchByIdQuery(int id)
+        => @"https://api.tvmaze.com/shows/" + id.ToString();
 
 }

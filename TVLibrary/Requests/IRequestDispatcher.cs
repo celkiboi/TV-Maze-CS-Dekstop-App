@@ -12,4 +12,6 @@ public interface IRequestDispatcher
     IEnumerable<Show> SearchShows(string query);
 
     Show SingleSearchShows(string query);
+
+    Show SearchShowById(int id);
 }

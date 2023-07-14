@@ -27,4 +27,16 @@ internal class RemoteDatabaseTests
 
         Assert.That(actual, Is.EqualTo(expected));
     }
+
+    [Test]
+    public void FetchDataAsync_Test_ReturnsEmpty() 
+    {
+        RemoteDatabase remoteDatabase = new();
+        const string url = "not a valid url";
+        string expected = string.Empty;
+
+        string actual = remoteDatabase.FetchDataAsync(url).Result;
+
+        Assert.That(actual, Is.EqualTo(expected));
+    }
 }
