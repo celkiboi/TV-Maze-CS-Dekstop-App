@@ -11,8 +11,8 @@ namespace TVLibrary.Requests;
 
 public class TVMaze : IRequestDispatcher
 {
-    IDeserializer deserializer;
-    IDatabase database;
+    readonly IDeserializer deserializer;
+    readonly IDatabase database;
 
     private TVMaze()
     {
