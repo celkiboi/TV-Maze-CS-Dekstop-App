@@ -22,6 +22,11 @@ public class TVMaze : IRequestDispatcher
         deserializer = new JSONDeserializerAdapter();
         database = new CacheDatabase(new RemoteDatabase(), new TimeSpan(0,0, 30));
     }
+    public static TVMaze Instance
+    {
+        get { return instance ??= new(); }
+        private set { instance = value; }
+    }
 
     public IEnumerable<Show> SearchShows(string query)
     {
@@ -74,9 +79,4 @@ public class TVMaze : IRequestDispatcher
     static string MakeShowSearchByIdQuery(int id)
         => @"https://api.tvmaze.com/shows/" + id.ToString();
 
-    public static TVMaze Instance
-    {
-        get { return instance ??= new(); }
-        private set { instance = value; }
-    }
 }
