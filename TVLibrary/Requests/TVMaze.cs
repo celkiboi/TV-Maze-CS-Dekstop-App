@@ -71,6 +71,55 @@ public class TVMaze : IRequestDispatcher
 
         return show;
     }
+    public IEnumerable<Season> FetchSeasons(int showId)
+    {
+        string query = SeasonsFetchByShowIdQuery(showId);
+
+        string response = database.FetchDataAsync(query).Result;
+
+        IEnumerable<Season>? seasons = deserializer.Deserialize<IEnumerable<Season>>(response);
+        if (seasons is null)
+        {
+            return Array.Empty<Season>();
+        }
+
+        return seasons;
+    }
+
+    public IEnumerable<Season> FetchSeasons(Show show)
+    {
+        return FetchSeasons(show.ID);
+    }
+
+    public IEnumerable<Episode> FetchEpisodes(Show show)
+    {
+        string query = EpisodesFetchByShowQuery(show);
+
+        string response = database.FetchDataAsync(query).Result;
+
+        IEnumerable<Episode>? episodes = deserializer.Deserialize<IEnumerable<Episode>>(response);
+        if (episodes is null)
+        {
+            return Array.Empty<Episode>();
+        }
+
+        return episodes;
+    }
+
+    public IEnumerable<Episode> FetchEpisodes(Season season)
+    {
+        string query = EpisodesFetchBySeasonQuery(season);
+
+        string response = database.FetchDataAsync(query).Result;
+
+        IEnumerable<Episode>? episodes = deserializer.Deserialize<IEnumerable<Episode>>(response);
+        if (episodes is null)
+        {
+            return Array.Empty<Episode>();
+        }
+
+        return episodes;
+    }
 
     static string MakeShowSearchQuery(string query) 
         => @"https://api.tvmaze.com/search/shows?q=" + query;
@@ -78,5 +127,11 @@ public class TVMaze : IRequestDispatcher
         => @"https://api.tvmaze.com/singlesearch/shows?q=" + query;
     static string MakeShowSearchByIdQuery(int id)
         => @"https://api.tvmaze.com/shows/" + id.ToString();
+    static string SeasonsFetchByShowIdQuery(int id)
+        => $"https://api.tvmaze.com/shows/{id}/seasons";
+    static string EpisodesFetchBySeasonQuery(Season season)
+        => $"https://api.tvmaze.com/seasons/{season.Id}/episodes";
+    static string EpisodesFetchByShowQuery(Show show)
+        => $"https://api.tvmaze.com/seasons/{show.ID}/episodes";
 
 }

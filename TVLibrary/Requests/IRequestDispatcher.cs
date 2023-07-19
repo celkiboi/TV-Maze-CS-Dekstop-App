@@ -14,4 +14,12 @@ public interface IRequestDispatcher
     Show SingleSearchShows(string query);
 
     Show SearchShowById(int id);
+
+    IEnumerable<Season> FetchSeasons(int showId);
+
+    IEnumerable<Season> FetchSeasons(Show show);
+
+    IEnumerable<Episode> FetchEpisodes(Show show);
+
+    IEnumerable<Episode> FetchEpisodes(Season season);
 }
