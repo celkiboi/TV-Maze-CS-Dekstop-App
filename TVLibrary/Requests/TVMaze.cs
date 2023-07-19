@@ -28,46 +28,39 @@ public class TVMaze : IRequestDispatcher
         private set { instance = value; }
     }
 
+    T GetData<T>(string query, T returnsWhenNull)
+    {
+        string response = database.FetchDataAsync(query).Result;
+
+        T? data = deserializer.Deserialize<T>(response);
+
+        return data ?? returnsWhenNull;
+    }
+
     public IEnumerable<Show> SearchShows(string query)
     {
         query = MakeShowSearchQuery(query);
 
-        string response = database.FetchDataAsync(query).Result;
-
-        IEnumerable<Show>? shows = deserializer.Deserialize<IEnumerable<Show>>(response);
-        
-        return shows ?? Enumerable.Empty<Show>();
+        return GetData(query, Enumerable.Empty<Show>());
     }
 
     public Show SingleSearchShows(string query)
     {
         query = MakeSingleShowSearchQuery(query);
 
-        string response = database.FetchDataAsync(query).Result;
-
-        Show? show = deserializer.Deserialize<Show>(response);
-
-        return show ?? ShowDirector.Instance.NullShow;
+        return GetData(query, ShowDirector.Instance.NullShow);
     }
     public Show SearchShowById(int id)
     {
         string query = MakeShowSearchByIdQuery(id);
 
-        string response = database.FetchDataAsync(query).Result;
-
-        Show? show = deserializer.Deserialize<Show?>(response);
-        
-        return show ?? ShowDirector.Instance.NullShow;
+        return GetData(query, ShowDirector.Instance.NullShow);
     }
     public IEnumerable<Season> FetchSeasons(int showId)
     {
         string query = SeasonsFetchByShowIdQuery(showId);
 
-        string response = database.FetchDataAsync(query).Result;
-
-        IEnumerable<Season>? seasons = deserializer.Deserialize<IEnumerable<Season>>(response);
-        
-        return seasons ?? Enumerable.Empty<Season>();
+        return GetData(query, Enumerable.Empty<Season>());
     }
 
     public IEnumerable<Season> FetchSeasons(Show show)
@@ -79,22 +72,14 @@ public class TVMaze : IRequestDispatcher
     {
         string query = EpisodesFetchByShowQuery(show);
 
-        string response = database.FetchDataAsync(query).Result;
-
-        IEnumerable<Episode>? episodes = deserializer.Deserialize<IEnumerable<Episode>>(response);
-        
-        return episodes ?? Enumerable.Empty<Episode>();
+        return GetData(query, Enumerable.Empty<Episode>());
     }
 
     public IEnumerable<Episode> FetchEpisodes(Season season)
     {
         string query = EpisodesFetchBySeasonQuery(season);
 
-        string response = database.FetchDataAsync(query).Result;
-
-        IEnumerable<Episode>? episodes = deserializer.Deserialize<IEnumerable<Episode>>(response);
-
-        return episodes ?? Enumerable.Empty<Episode>();
+        return GetData(query, Enumerable.Empty<Episode>());
 
     }
 
