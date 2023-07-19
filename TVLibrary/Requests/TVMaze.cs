@@ -35,12 +35,8 @@ public class TVMaze : IRequestDispatcher
         string response = database.FetchDataAsync(query).Result;
 
         IEnumerable<Show>? shows = deserializer.Deserialize<IEnumerable<Show>>(response);
-        if (shows is null)
-        {
-            return Enumerable.Empty<Show>();
-        }
-
-        return shows;
+        
+        return shows ?? Enumerable.Empty<Show>();
     }
 
     public Show SingleSearchShows(string query)
@@ -50,12 +46,8 @@ public class TVMaze : IRequestDispatcher
         string response = database.FetchDataAsync(query).Result;
 
         Show? show = deserializer.Deserialize<Show>(response);
-        if (show is null)
-        {
-            return ShowDirector.Instance.NullShow;
-        }
 
-        return show;
+        return show ?? ShowDirector.Instance.NullShow;
     }
     public Show SearchShowById(int id)
     {
@@ -64,12 +56,8 @@ public class TVMaze : IRequestDispatcher
         string response = database.FetchDataAsync(query).Result;
 
         Show? show = deserializer.Deserialize<Show?>(response);
-        if (show is null)
-        {
-            return ShowDirector.Instance.NullShow;
-        }
-
-        return show;
+        
+        return show ?? ShowDirector.Instance.NullShow;
     }
     public IEnumerable<Season> FetchSeasons(int showId)
     {
@@ -78,12 +66,8 @@ public class TVMaze : IRequestDispatcher
         string response = database.FetchDataAsync(query).Result;
 
         IEnumerable<Season>? seasons = deserializer.Deserialize<IEnumerable<Season>>(response);
-        if (seasons is null)
-        {
-            return Array.Empty<Season>();
-        }
-
-        return seasons;
+        
+        return seasons ?? Enumerable.Empty<Season>();
     }
 
     public IEnumerable<Season> FetchSeasons(Show show)
@@ -98,12 +82,8 @@ public class TVMaze : IRequestDispatcher
         string response = database.FetchDataAsync(query).Result;
 
         IEnumerable<Episode>? episodes = deserializer.Deserialize<IEnumerable<Episode>>(response);
-        if (episodes is null)
-        {
-            return Array.Empty<Episode>();
-        }
-
-        return episodes;
+        
+        return episodes ?? Enumerable.Empty<Episode>();
     }
 
     public IEnumerable<Episode> FetchEpisodes(Season season)
@@ -113,12 +93,9 @@ public class TVMaze : IRequestDispatcher
         string response = database.FetchDataAsync(query).Result;
 
         IEnumerable<Episode>? episodes = deserializer.Deserialize<IEnumerable<Episode>>(response);
-        if (episodes is null)
-        {
-            return Array.Empty<Episode>();
-        }
 
-        return episodes;
+        return episodes ?? Enumerable.Empty<Episode>();
+
     }
 
     static string MakeShowSearchQuery(string query) 
@@ -133,5 +110,4 @@ public class TVMaze : IRequestDispatcher
         => $"https://api.tvmaze.com/seasons/{season.Id}/episodes";
     static string EpisodesFetchByShowQuery(Show show)
         => $"https://api.tvmaze.com/seasons/{show.ID}/episodes";
-
 }
