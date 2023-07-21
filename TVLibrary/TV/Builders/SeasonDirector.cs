@@ -44,7 +44,7 @@ public class SeasonDirector
         Season[] seasons = new Season[3];
         SeasonBuilder seasonBuilder = new();
 
-        Country country = new("UnitesStates", "US", "America/New_York");
+        Country country = new("United States", "US", "America/New_York");
         Network network = new(2, "CBS", country, "https://www.cbs.com/");
 
         seasons[0] = seasonBuilder.BuildId(1)
