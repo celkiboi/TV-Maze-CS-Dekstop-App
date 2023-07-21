@@ -14,5 +14,5 @@ public record class Country
     [property: JsonPropertyName("timezone")] string Timezone
 )
 {
-
+    public static Country NullCountry { get; } = new(string.Empty, string.Empty, string.Empty);
 }

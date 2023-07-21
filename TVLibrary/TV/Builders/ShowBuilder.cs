@@ -88,13 +88,13 @@ public class ShowBuilder : IDisposable
 
     public Show Build()
     {
-        if (NoMemberIsNull())
+        if (HasZeroNullParameters())
             return new Show(id, url!, name!, genres!, status!, runtime, averageRuntime, premiere, end, officialSite!, image!);
         else
             throw new InvalidOperationException("Attempted to build, while there was a null value!");
     }
 
-    bool NoMemberIsNull()
+    bool HasZeroNullParameters()
     {
         return (url != null) &&
             (name != null) &&

@@ -15,5 +15,5 @@ public record class Network
     [property: JsonPropertyName("officialSite")] string OfficialSite
 )
 {
-
+    public static Network NullNetwork { get; } = new(0, string.Empty, Country.NullCountry, string.Empty);
 }

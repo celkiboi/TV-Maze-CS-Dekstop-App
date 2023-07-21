@@ -12,4 +12,6 @@ public record class Image
      [property: JsonPropertyName("medium")] string MediumSizeLink,
      [property: JsonPropertyName("original")] string OriginalSizeLink
 )
-{ }
+{
+    public static Image NullImage {get;} = new(string.Empty, string.Empty);
+}

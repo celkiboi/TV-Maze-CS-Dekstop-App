@@ -26,16 +26,16 @@ public class ShowDirector
     {
         ShowBuilder builder = new();
         return builder.BuildId(0)
-            .BuildURL("")
-            .BuildName("")
+            .BuildURL(string.Empty)
+            .BuildName(string.Empty)
             .BuildGenres(Array.Empty<string>())
-            .BuildStatus("")
+            .BuildStatus(string.Empty)
             .BuildRuntime(0)
             .BuildAverageRuntime(0)
             .BuildPremiere(DateOnly.MinValue)
             .BuildEnd(DateOnly.MaxValue)
-            .BuildOffciailSite("")
-            .BuildImage(new Image("", ""))
+            .BuildOffciailSite(string.Empty)
+            .BuildImage(Image.NullImage)
             .Build();
     }
 

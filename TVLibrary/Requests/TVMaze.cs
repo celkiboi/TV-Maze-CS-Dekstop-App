@@ -80,7 +80,6 @@ public class TVMaze : IRequestDispatcher
         string query = EpisodesFetchBySeasonQuery(season);
 
         return GetData(query, Enumerable.Empty<Episode>());
-
     }
 
     static string MakeShowSearchQuery(string query) 

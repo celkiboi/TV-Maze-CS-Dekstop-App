@@ -40,4 +40,10 @@ public class TVMaze_Tests
 
         Assert.That(expected, Is.EqualTo(actual));
     }
+
+    [Test]
+    public void TVMazeTest_FetchSeasons_ByShowId()
+    {
+
+    }
 }
