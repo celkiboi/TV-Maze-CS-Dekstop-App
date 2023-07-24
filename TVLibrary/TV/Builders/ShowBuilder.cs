@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TVLibrary.TV.Builders;
 
-public class ShowBuilder : IDisposable
+public class ShowBuilder
 {
     int id;
     string? url;
@@ -102,10 +102,5 @@ public class ShowBuilder : IDisposable
             (status != null) &&
             (officialSite != null) &&
             (image != null);
-    }
-
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TVLibrary.TV.Builders;
 
-public class SeasonBuilder : IDisposable
+public class SeasonBuilder
 {
     int id;
     string? url;
@@ -86,10 +86,5 @@ public class SeasonBuilder : IDisposable
             (name != null) &&
             (network != null) &&
             (image != null));   
-    }
-
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
     }
 }
