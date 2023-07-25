@@ -104,4 +104,23 @@ public class TVMaze_Tests
 
         Assert.That(actual, Is.EqualTo(expected)); 
     }
+
+    [Test]
+    public void TVMazeTest_FetchEpisodes_BySeason()
+    {
+        Episode expectedEpisode = EpisodeDirector.Instance.SampleEpisode;
+        TVMaze tVMaze = TVMaze.Instance;
+        Season season = SeasonDirector.Instance.SampleSeason;
+        string expected = expectedEpisode.ToString();
+
+        IEnumerable<Episode> episodes = tVMaze.FetchEpisodes(season);
+        Episode? actualEpisode = episodes.FirstOrDefault();
+        string actual;
+        if (actualEpisode is null)
+            actual = string.Empty;
+        else
+            actual = actualEpisode.ToString();
+
+        Assert.That(actual, Is.EqualTo(expected));
+    }
 }
