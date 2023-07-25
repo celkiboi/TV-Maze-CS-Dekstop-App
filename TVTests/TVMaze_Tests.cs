@@ -55,12 +55,12 @@ public class TVMaze_Tests
         IEnumerable<Season> actualSeasons = tvMaze.FetchSeasons(1);
 
         string actual = "";
-        foreach (Season season in actualSeasons) 
+        foreach (Season season in actualSeasons)
         {
             actual += $"{season}, ";
         }
 
-        Assert.That (expected, Is.EqualTo(actual));
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -84,5 +84,24 @@ public class TVMaze_Tests
         }
 
         Assert.That(expected, Is.EqualTo(actual));
+    }
+
+    [Test]
+    public void TVMazeTest_FetchEpisodes_ByShow()
+    {
+        Episode expectedEpisode = EpisodeDirector.Instance.SampleEpisode;
+        TVMaze tVMaze = TVMaze.Instance;
+        Show show = ShowDirector.Instance.SampleShow;
+        string expected = expectedEpisode.ToString();
+
+        IEnumerable<Episode> episodes = tVMaze.FetchEpisodes(show);
+        Episode? actualEpisode = episodes.FirstOrDefault();
+        string actual;
+        if (actualEpisode is null)
+            actual = string.Empty;
+        else
+            actual = actualEpisode.ToString();
+
+        Assert.That(actual, Is.EqualTo(expected)); 
     }
 }
