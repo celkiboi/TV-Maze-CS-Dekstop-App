@@ -10,6 +10,7 @@ public class SeasonDirector
 {
     static SeasonDirector? instance;
     Season? nullSeason;
+    Season? sampleSeason;
     IEnumerable<Season>? sampleSeasons;
 
     private SeasonDirector() { }
@@ -87,5 +88,28 @@ public class SeasonDirector
             .Build();
 
         return seasons;
+    }
+
+    public Season SampleSeason => sampleSeason ??= BuildSampleSeason();
+
+    static Season BuildSampleSeason()
+    {
+        SeasonBuilder seasonBuilder = new();
+
+        Country country = new("United States", "US", "America/New_York");
+        Network network = new(2, "CBS", country, "https://www.cbs.com/");
+
+        return seasonBuilder.BuildId(1)
+            .BuildURL("https://www.tvmaze.com/seasons/1/under-the-dome-season-1")
+            .BuildNumber(1)
+            .BuildName(string.Empty)
+            .BuildEpisodeOrder(13)
+            .BuildPremiere(new DateOnly(2013, 6, 24))
+            .BuildEnd(new DateOnly(2013, 9, 16))
+            .BuildNetwork(network)
+            .BuildImage(new Image(
+                "https://static.tvmaze.com/uploads/images/medium_portrait/24/60941.jpg",
+                "https://static.tvmaze.com/uploads/images/original_untouched/24/60941.jpg"))
+            .Build();
     }
 }

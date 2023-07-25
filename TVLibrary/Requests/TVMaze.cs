@@ -37,16 +37,16 @@ public class TVMaze : IRequestDispatcher
         return data ?? returnsWhenNull;
     }
 
-    public IEnumerable<Show> SearchShows(string query)
+    public IEnumerable<Show> SearchShows(string showName)
     {
-        query = MakeShowSearchQuery(query);
+        string query = MakeShowSearchQuery(showName);
 
         return GetData(query, Enumerable.Empty<Show>());
     }
 
-    public Show SingleSearchShows(string query)
+    public Show SingleSearchShows(string showName)
     {
-        query = MakeSingleShowSearchQuery(query);
+        string query = MakeSingleShowSearchQuery(showName);
 
         return GetData(query, ShowDirector.Instance.NullShow);
     }
@@ -82,10 +82,10 @@ public class TVMaze : IRequestDispatcher
         return GetData(query, Enumerable.Empty<Episode>());
     }
 
-    static string MakeShowSearchQuery(string query) 
-        => @"https://api.tvmaze.com/search/shows?q=" + query;
-    static string MakeSingleShowSearchQuery(string query) 
-        => @"https://api.tvmaze.com/singlesearch/shows?q=" + query;
+    static string MakeShowSearchQuery(string showName) 
+        => @"https://api.tvmaze.com/search/shows?q=" + showName;
+    static string MakeSingleShowSearchQuery(string showName) 
+        => @"https://api.tvmaze.com/singlesearch/shows?q=" + showName;
     static string MakeShowSearchByIdQuery(int id)
         => @"https://api.tvmaze.com/shows/" + id.ToString();
     static string SeasonsFetchByShowIdQuery(int id)

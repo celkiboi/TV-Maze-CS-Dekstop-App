@@ -9,9 +9,9 @@ namespace TVLibrary.Requests;
 
 public interface IRequestDispatcher
 {
-    IEnumerable<Show> SearchShows(string query);
+    IEnumerable<Show> SearchShows(string showName);
 
-    Show SingleSearchShows(string query);
+    Show SingleSearchShows(string showName);
 
     Show SearchShowById(int id);
 
