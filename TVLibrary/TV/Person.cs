@@ -19,14 +19,17 @@ public record class Person
 )
 {
     // some actors aren't dead yet
-    // do to such thing, the API returns null for "deathday"
+    // due to such thing, the API returns null for "deathday"
     // as the .NET DateOnly is a value type, we have to use the nullable DateOnly? type
-    // this project aims to reduce null usage, replacing null value with default values
+    // this project aims to reduce null usage, replacing null values with default values
     // as a result a tuple with a bool is used to give info on actors life status
     // this way the user is forced to check for "nulability" (he has to deconstruct a tuple)
     // even if he doesn't do that, the program won't crash and he will be represented with DateOnly.Max value
     // this method is better than just returning DateOnly.Max because in that instance,
     // the user does not know he has to check for DateOnly.Max
+    // forced to add another constructor due to record type constraint
+    // if a contructor without deathday is called, a person that is still alive will be created
+    // deathday will NOT be included in ToString() output!!!
 
     [JsonPropertyName("deathday")]
     readonly DateOnly? deathday;
