@@ -123,4 +123,14 @@ public class TVMaze_Tests
 
         Assert.That(actual, Is.EqualTo(expected));
     }
+
+    //[Test]
+    //public void TVMazeTest_FetchCast_ByShow()
+    //{
+    //    TVMaze tvMaze = TVMaze.Instance;
+    //    Show show = ShowDirector.Instance.SampleShow;
+
+    //    IEnumerable<Person> cast = tvMaze.FetchCast(show);
+
+    //}
 }

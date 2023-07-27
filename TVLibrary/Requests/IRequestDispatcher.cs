@@ -22,4 +22,8 @@ public interface IRequestDispatcher
     IEnumerable<Episode> FetchEpisodes(Show show);
 
     IEnumerable<Episode> FetchEpisodes(Season season);
+
+    IEnumerable<Person> FetchCast(Show show);
+
+    IEnumerable<Person> FetchCast(int showId);
 }

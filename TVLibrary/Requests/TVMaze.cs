@@ -52,13 +52,13 @@ public class TVMaze : IRequestDispatcher
     }
     public Show SearchShowById(int id)
     {
-        string query = MakeShowSearchByIdQuery(id);
+        string query = MakeShowSearchQuery(id);
 
         return GetData(query, ShowDirector.Instance.NullShow);
     }
     public IEnumerable<Season> FetchSeasons(int showId)
     {
-        string query = SeasonsFetchByShowIdQuery(showId);
+        string query = MakeFetchSeasonsQuery(showId);
 
         return GetData(query, Enumerable.Empty<Season>());
     }
@@ -70,28 +70,44 @@ public class TVMaze : IRequestDispatcher
 
     public IEnumerable<Episode> FetchEpisodes(Show show)
     {
-        string query = EpisodesFetchByShowQuery(show);
+        string query = MakeFetchEpisodesQuery(show);
 
         return GetData(query, Enumerable.Empty<Episode>());
     }
 
     public IEnumerable<Episode> FetchEpisodes(Season season)
     {
-        string query = EpisodesFetchBySeasonQuery(season);
+        string query = MakeFetchEpisodesQuery(season);
 
         return GetData(query, Enumerable.Empty<Episode>());
+    }
+
+    public IEnumerable<Person> FetchCast(Show show)
+    {
+        return FetchCast(show.ID);
+    }
+
+    public IEnumerable<Person> FetchCast(int showId)
+    {
+        string query = MakeFetchCastQuery(showId);
+
+        return GetData(query, Enumerable.Empty<Person>());
     }
 
     static string MakeShowSearchQuery(string showName) 
         => @"https://api.tvmaze.com/search/shows?q=" + showName;
     static string MakeSingleShowSearchQuery(string showName) 
         => @"https://api.tvmaze.com/singlesearch/shows?q=" + showName;
-    static string MakeShowSearchByIdQuery(int id)
+    static string MakeShowSearchQuery(int id)
         => @"https://api.tvmaze.com/shows/" + id.ToString();
-    static string SeasonsFetchByShowIdQuery(int id)
+    static string MakeFetchSeasonsQuery(int id)
         => $"https://api.tvmaze.com/shows/{id}/seasons";
-    static string EpisodesFetchBySeasonQuery(Season season)
+    static string MakeFetchEpisodesQuery(Season season)
         => $"https://api.tvmaze.com/seasons/{season.Id}/episodes";
-    static string EpisodesFetchByShowQuery(Show show)
+    static string MakeFetchEpisodesQuery(Show show)
         => $"https://api.tvmaze.com/seasons/{show.ID}/episodes";
+    static string MakeFetchCastQuery(int showId)
+        => $"https://api.tvmaze.com/shows/{showId}/cast";
+
+
 }
